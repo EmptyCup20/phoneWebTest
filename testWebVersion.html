@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>qrcode test</title>
+    <title>浏览器手机版本验证</title>
 </head>
 <body>
 <script>
@@ -26,13 +26,13 @@
             } (),
             language: (navigator.browserLanguage || navigator.language).toLowerCase()
         }
-        document.writeln("语言版本: " + browser.language);
-        document.writeln("<br> 是否为移动终端: " + browser.versions.mobile);
-        document.writeln("<br> ios终端: " + browser.versions.ios);
-        document.writeln("<br> android终端: " + browser.versions.android);
-        document.writeln("<br> 是否为iPhone: " + browser.versions.iPhone);
-        document.writeln("<br> 是否为微信浏览器: " + browser.versions.weChat);
-        document.writeln("<br> 是否iPad: " + browser.versions.iPad);
+        document.writeln("语言版本: <b>" + browser.language + "</b>");
+        document.writeln("<br> 是否为移动终端:<b> " + browser.versions.mobile + "</b>");
+        document.writeln("<br> ios终端: <b>" + browser.versions.ios + "</b>");
+        document.writeln("<br> android终端: <b>" + browser.versions.android + "</b>");
+        document.writeln("<br> 是否为iPhone: <b>" + browser.versions.iPhone + "</b>");
+        document.writeln("<br> 是否为微信浏览器: <b>" + browser.versions.weChat + "</b>");
+        document.writeln("<br> 是否iPad: <b>" + browser.versions.iPad + "</b>");
         document.writeln(navigator.userAgent);
     }
 </script>
