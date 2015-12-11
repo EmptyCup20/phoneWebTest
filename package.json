@@ -1,0 +1,22 @@
+{
+  "name": "phoneWebTest",
+  "version": "1.0.0",
+  "description": "test phoneweb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hiklyTeam/phoneWebTest.git"
+  },
+  "keywords": [
+    "xx"
+  ],
+  "author": "xx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiklyTeam/phoneWebTest/issues"
+  },
+  "homepage": "https://github.com/hiklyTeam/phoneWebTest"
+}

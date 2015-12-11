@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>qrcode test</title>
+</head>
+<body>
+<script src="jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="qrcode.js"></script>
+<script>
+    $(function() {
+        var canvas = createCanvas();
+        $("#qrcodeCanvas").append(canvas);
+    });
+
+    var createCanvas	= function(){
+        var background = "#ffffff";
+        var foreground = "#000000";
+
+        var qrcode	= new QRCode(-1, QRErrorCorrectLevel.H);
+        qrcode.addData("http://10.20.135.26/msp/views/pms/appCar.html#/findCarMap");
+        qrcode.make();
+
+        // create canvas element
+        var canvas	= document.createElement('canvas');
+        canvas.width	= 580;
+        canvas.height	= 580;
+        var ctx		= canvas.getContext('2d');
+
+        // 文字说明
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0,0,580,100);
+        ctx.fillStyle = "#999999";
+        ctx.font = "26px 黑体";
+        ctx.textBaseline = 'top';
+        //填充字符串
+        var text="使用二维码或验证码均可进行访客验证及登记";
+        ctx.fillText(text, 26, 26);
+
+        // compute tileW/tileH based on options.width/options.height
+        var tileW	= 200  / qrcode.getModuleCount();
+        var tileH	= 200 / qrcode.getModuleCount();
+
+        // draw in the canvas
+        for( var row = 0; row < qrcode.getModuleCount(); row++ ){
+            for( var col = 0; col < qrcode.getModuleCount(); col++ ){
+                ctx.fillStyle = qrcode.isDark(row, col) ? foreground : background;
+                var w = (Math.ceil((col+1)*tileW) - Math.floor(col*tileW));
+                var h = (Math.ceil((row+1)*tileW) - Math.floor(row*tileW));
+                ctx.fillRect(190 + Math.round(col*tileW), 100 + Math.round(row*tileH), w, h);
+            }
+        }
+
+        // 验证码
+        ctx.fillStyle = "#00a1e7";
+        ctx.fillRect(135, 322, 310, 64);
+        ctx.fillStyle = "#fff";
+        ctx.font = "40px Arial";
+        ctx.textBaseline = 'top';
+        var code = "3357";
+        ctx.fillText(code, 240, 335);
+
+        // 虚线
+        ctx.strokeStyle="#999999";
+        ctx.dashedLineTo(0, 410, 580, 410, 9);
+
+        // 预约时间、户室
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 450, 580, 100);
+        ctx.fillStyle = "#999999";
+        ctx.font = "26px 黑体";
+        ctx.textBaseline = 'top';
+        var text2 = "预约时间： 4月23日 12:00 - 13:00";
+        var text3 = "户    室： 明月江南 - 1幢 - 1单元 - 101室";
+        ctx.fillText(text2, 26, 450);
+        ctx.fillText(text3, 26, 500);
+
+        // return just built canvas
+        return canvas;
+    }
+
+    CanvasRenderingContext2D.prototype.dashedLineTo = function (fromX, fromY, toX, toY, pattern) {
+        // default interval distance -> 5px
+        if (typeof pattern === "undefined") {
+            pattern = 5;
+        }
+
+        // calculate the delta x and delta y
+        var dx = (toX - fromX);
+        var dy = (toY - fromY);
+        var distance = Math.floor(Math.sqrt(dx*dx + dy*dy));
+        var dashlineInteveral = (pattern <= 0) ? distance : (distance/pattern);
+        var deltay = (dy/distance) * pattern;
+        var deltax = (dx/distance) * pattern;
+
+        // draw dash line
+        this.beginPath();
+        for(var dl=0; dl<dashlineInteveral; dl++) {
+            if(dl%2) {
+                this.lineTo(fromX + dl*deltax, fromY + dl*deltay);
+            } else {
+                this.moveTo(fromX + dl*deltax, fromY + dl*deltay);
+            }
+        }
+        this.stroke();
+    };
+
+</script>
+
+<div id="qrcodeCanvas"></div>
+</body>
+</html>
